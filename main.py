@@ -59,7 +59,7 @@ def restructure_scale_mode(mode_index, scale):
     scale_copy = copy.copy(scale)
 
     for n in range(len(scale)):
-        scale[n] = scale_copy[(n - 7) + mode_index]  # TODO: ERRORING HERE, scale_copy index is fucked
+        scale[n] = scale_copy[(n - 7) + mode_index]
 
     return scale
 
