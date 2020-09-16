@@ -51,23 +51,32 @@ def get_mode(mode):
     elif mode == 6:
         return "Locrian"
 
+    elif mode == 7:
+        return "Harmonic Major"
+
+    elif mode == 8:
+        return "Harmonic Minor"
+
 
 # Data
 musical_alphabet = ["A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G",  "G#", "A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G",  "G#"]
 #           indices: 0     1     2     3    4     5     6     7     8    9     10    11 It's doubled for easy maths :)
 
+WH = 3
 W = 2
 H = 1
 
 # Modes and their steps
 mode_dictionary = {
-    "Ionian":     [W, W, H, W, W, W, H],
-    "Dorian":     [W, H, W, W, W, H, W],
-    "Phrygian":   [H, W, W, W, H, W, W],
-    "Lydian":     [W, W, W, H, W, W, H],
-    "Mixolydian": [W, W, H, W, W, H, W],
-    "Aeolian":    [W, H, W, W, H, W, W],
-    "Locrian":    [H, W, W, H, W, W, W],
+    "Ionian":         [W, W, H, W, W, W, H],
+    "Dorian":         [W, H, W, W, W, H, W],
+    "Phrygian":       [H, W, W, W, H, W, W],
+    "Lydian":         [W, W, W, H, W, W, H],
+    "Mixolydian":     [W, W, H, W, W, H, W],
+    "Aeolian":        [W, H, W, W, H, W, W],
+    "Locrian":        [H, W, W, H, W, W, W],
+    "Harmonic Major": [W, W, H, W, H, W + H],
+    "Harmonic Minor": [W, H, W, W, H, W + H, H],
 }
 
 
