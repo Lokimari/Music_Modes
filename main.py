@@ -29,44 +29,14 @@ def number_from_scale_input(scale_input):
     else:
         return 0
 
-def get_mode(mode):
-    if mode == 0:
-        return "Ionian"
-
-    elif mode == 1:
-        return "Dorian"
-
-    elif mode == 2:
-        return "Phrygian"
-
-    elif mode == 3:
-        return "Lydian"
-
-    elif mode == 4:
-        return "Mixolydian"
-
-    elif mode == 5:
-        return "Aeolian"
-
-    elif mode == 6:
-        return "Locrian"
-
-    elif mode == 7:
-        return "Harmonic Major"
-
-    elif mode == 8:
-        return "Harmonic Minor"
-
-
 # Data
 musical_alphabet = ["A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G",  "G#", "A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G",  "G#"]
 #           indices: 0     1     2     3    4     5     6     7     8    9     10    11 It's doubled for easy maths :)
 
-WH = 3
 W = 2
 H = 1
 
-# Modes and their steps
+# Modes and their steps, final step will be shown if scale_length is set to 7 below.
 mode_dictionary = {
     "Ionian":         [W, W, H, W, W, W, H],
     "Dorian":         [W, H, W, W, W, H, W],
@@ -79,6 +49,7 @@ mode_dictionary = {
     "Harmonic Minor": [W, H, W, W, H, W + H, H],
 }
 
+mode_list = list(mode_dictionary)
 
 scale_length = 6  # Does not wrap to root note
 
@@ -96,13 +67,13 @@ for new_scale in range(12):
 
         # Creating the scale based on mode
         for note in range(scale_length):
-            steps.append(mode_dictionary[get_mode(mode)][note])         # Add the step value onto steps
+            steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
             index = (sum(steps) + number_from_scale_input(root_scale))  # Add up steps and the index of the scale as "index"
 
             scale.append(musical_alphabet[index])  # Add the proper note onto the scale
 
         # Output
-        print(f"{get_mode(mode)}: {scale}")
+        print(f"{mode_list[mode]}: {scale}")
 
         scale = [root_scale]  # It all goes to shit without this line
 
