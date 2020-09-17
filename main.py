@@ -30,10 +30,9 @@ def number_from_scale_input(scale_input):
 
 
 # Data
-musical_alphabet = ["A ",  "A#", "B ",  "C ", "C#", "D ",  "D#", "E ",  "F ", "F#", "G ", "G#",
-                    "A ",  "A#", "B ",  "C ", "C#", "D ",  "D#", "E ",  "F ", "F#", "G ", "G#",
-                    "A ",  "A#", "B ",  "C ", "C#", "D ",  "D#", "E ",  "F ", "F#", "G ", "G#"]
-#           indices: 0     1     2     3    4     5     6     7     8    9     10    11    12
+musical_alphabet = ["A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G", "G#",
+                    "A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G", "G#"]
+#           indices: 0     1     2     3    4     5     6     7     8    9     10   11
 
 W = 2
 H = 1
@@ -84,6 +83,34 @@ def print_all_modes_for_each_semitone():
 
         print("\n")
 
+def fetch_all_music_data_as_dictionary():
+    musical_dictionary = dict()
+
+    # Logic
+    for new_scale in range(12):
+        # For each semitone
+        root_scale = musical_alphabet[new_scale]
+        scale = [root_scale]
+        musical_dictionary[root_scale] = dict()
+
+        # For each mode
+        for mode in range(len(mode_dictionary)):
+            steps = []
+
+            # Creating the scale based on mode
+            for note in range(scale_length):
+                steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
+                index = (sum(steps) + number_from_scale_input(root_scale))   # Progressively add up step count
+
+                scale.append(musical_alphabet[index])  # Add the proper note onto the scale
+
+            # Output
+            musical_dictionary[root_scale][mode_list[mode]] = [scale]
+
+            scale = [root_scale]  # It all goes to shit without this line
+
+    return musical_dictionary
+
 # For just getting a single scale
 def construct_single_scale(scale_index, mode):
     steps = []
@@ -106,8 +133,9 @@ def fetch_single_scale(scale_letter, mode):
 
 def main():
     # print_all_modes_for_each_semitone()
-    scale = fetch_single_scale("C", 0)
-    print(scale)
+    # print(fetch_single_scale("C", 0))
+    musical_dictionary = fetch_all_music_data_as_dictionary()
+
 
 if __name__ == "__main__":
     main()
