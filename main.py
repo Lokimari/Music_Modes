@@ -84,10 +84,30 @@ def print_all_modes_for_each_semitone():
 
         print("\n")
 
+# For just getting a single scale
+def construct_single_scale(scale_index, mode):
+    steps = []
+    scale = [musical_alphabet[scale_index]]
+
+    for note in range(scale_length):
+        steps.append(mode_dictionary[mode_list[mode]][note])  # Add the step value onto steps
+        index = (sum(steps) + scale_index)  # Progressively add up step count
+
+        scale.append(musical_alphabet[index])
+
+    return scale
+
+def fetch_single_scale(scale_letter, mode):
+    scale_index = number_from_scale_input(scale_letter)
+    scale = construct_single_scale(scale_index, mode)
+
+    return scale
+
 
 def main():
-    print_all_modes_for_each_semitone()
-
+    # print_all_modes_for_each_semitone()
+    scale = fetch_single_scale("C", 0)
+    print(scale)
 
 if __name__ == "__main__":
     main()
