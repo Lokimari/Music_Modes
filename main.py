@@ -1,6 +1,5 @@
 # Music Theory Figuring
 
-# Functions
 def number_from_scale_input(scale_input):
     if scale_input.lower() == "g#" or scale_input.lower() == "ab":
         return 11
@@ -56,31 +55,39 @@ mode_dictionary = {
 
 mode_list = list(mode_dictionary)
 
-scale_length = 7  # Does not wrap to root note
+scale_length = 6  # Does not wrap to root note
 
-# Logic
-for new_scale in range(12):
-    # For each semitone
-    root_scale = musical_alphabet[new_scale]
-    scale = [root_scale]
+def print_all_modes_for_each_semitone():
+    # Logic
+    for new_scale in range(12):
+        # For each semitone
+        root_scale = musical_alphabet[new_scale]
+        scale = [root_scale]
 
-    print(root_scale)
+        print(root_scale)
 
-    # For each mode
-    for mode in range(len(mode_dictionary)):
-        steps = []
+        # For each mode
+        for mode in range(len(mode_dictionary)):
+            steps = []
 
-        # Creating the scale based on mode
-        for note in range(scale_length):
-            steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
-            index = (sum(steps) + number_from_scale_input(root_scale))   # Progressively add up step count
+            # Creating the scale based on mode
+            for note in range(scale_length):
+                steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
+                index = (sum(steps) + number_from_scale_input(root_scale))   # Progressively add up step count
 
-            scale.append(musical_alphabet[index])  # Add the proper note onto the scale
+                scale.append(musical_alphabet[index])  # Add the proper note onto the scale
 
-        # Output
-        print(f"{mode_list[mode]}: {scale}")
+            # Output
+            print(f"{mode_list[mode]}: {scale}")
 
-        scale = [root_scale]  # It all goes to shit without this line
+            scale = [root_scale]  # It all goes to shit without this line
 
-    print("\n")
+        print("\n")
 
+
+def main():
+    print_all_modes_for_each_semitone()
+
+
+if __name__ == "__main__":
+    main()
