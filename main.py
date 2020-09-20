@@ -56,6 +56,7 @@ mode_list = list(mode_dictionary)
 
 scale_length = 6  # Does not wrap to root note
 
+
 def print_all_modes_for_each_semitone():
     # Logic
     for new_scale in range(12):
@@ -71,17 +72,21 @@ def print_all_modes_for_each_semitone():
 
             # Creating the scale based on mode
             for note in range(scale_length):
-                steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
-                index = (sum(steps) + number_from_scale_input(root_scale))   # Progressively add up step count
+                step_value = mode_dictionary[mode_list[mode]][note]
+                root_value = number_from_scale_input(root_scale)
+
+                steps.append(step_value)           # Add the step value onto steps
+                index = (sum(steps) + root_value)  # Progressively add up step count
 
                 scale.append(musical_alphabet[index])  # Add the proper note onto the scale
 
             # Output
             print(f"{mode_list[mode]}: {scale}")
 
-            scale = [root_scale]  # It all goes to shit without this line
+            scale = [root_scale]  # Reinitialize
 
         print("\n")
+
 
 def fetch_all_music_data_as_dictionary():
     musical_dictionary = dict()
@@ -91,6 +96,8 @@ def fetch_all_music_data_as_dictionary():
         # For each semitone
         root_scale = musical_alphabet[new_scale]
         scale = [root_scale]
+
+        # Create an entry for the Root's modes
         musical_dictionary[root_scale] = dict()
 
         # For each mode
@@ -99,17 +106,21 @@ def fetch_all_music_data_as_dictionary():
 
             # Creating the scale based on mode
             for note in range(scale_length):
-                steps.append(mode_dictionary[mode_list[mode]][note])         # Add the step value onto steps
-                index = (sum(steps) + number_from_scale_input(root_scale))   # Progressively add up step count
+                step_value = mode_dictionary[mode_list[mode]][note]
+                root_value = number_from_scale_input(root_scale)
+
+                steps.append(step_value)           # Add the step value onto steps
+                index = (root_value + sum(steps))  # Progressively add up step count, + root_value as a base
 
                 scale.append(musical_alphabet[index])  # Add the proper note onto the scale
 
-            # Output
+            # Add mode onto root's value
             musical_dictionary[root_scale][mode_list[mode]] = [scale]
 
-            scale = [root_scale]  # It all goes to shit without this line
+            scale = [root_scale]  # Reinitialize
 
     return musical_dictionary
+
 
 # For just getting a single scale
 def construct_single_scale(scale_index, mode):
@@ -123,6 +134,7 @@ def construct_single_scale(scale_index, mode):
         scale.append(musical_alphabet[index])
 
     return scale
+
 
 def fetch_single_scale(scale_letter, mode):
     scale_index = number_from_scale_input(scale_letter)
@@ -145,7 +157,7 @@ def determine_chord(inputs, musical_dict):
                         if note == mode_note:
                             likelihood += 1
 
-            if likelihood > len(inputs) - 1:
+            if likelihood == len(inputs):
                 possible_modes += str(musical_dict[root][mode_list[mode]]) + "\n"
 
             likelihood = 0
@@ -167,6 +179,7 @@ def guess_chord():
 
 
 def main():
+    print("Chord Guesser")
     # print_all_modes_for_each_semitone()
     # print(fetch_single_scale("C", 0))
     # musical_dictionary = fetch_all_music_data_as_dictionary()
