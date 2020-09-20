@@ -131,10 +131,46 @@ def fetch_single_scale(scale_letter, mode):
     return scale
 
 
+def determine_chord(inputs, musical_dict):
+    #  Jaccard-like scoring system
+    possible_modes = ""
+    likelihood = 0
+
+    for root in musical_dict:
+        for mode in range(len(mode_list)):
+
+            for note in inputs:
+                for i in musical_dict[root][mode_list[mode]]:
+                    for mode_note in i:
+                        if note == mode_note:
+                            likelihood += 1
+
+            if likelihood > len(inputs) - 1:
+                possible_modes += str(musical_dict[root][mode_list[mode]]) + "\n"
+
+            likelihood = 0
+
+    print(possible_modes)
+
+
+def guess_chord():
+    found = 0
+    musical_dictionary = fetch_all_music_data_as_dictionary()
+    inputs = set()
+
+    while found == 0:
+        note_input = input(">>> ")
+        inputs.add(note_input.upper() if note_input.upper() in musical_alphabet else print("Invalid input"))
+
+        if len(inputs) > 1:
+            determine_chord(inputs, musical_dictionary)
+
+
 def main():
     # print_all_modes_for_each_semitone()
     # print(fetch_single_scale("C", 0))
-    musical_dictionary = fetch_all_music_data_as_dictionary()
+    # musical_dictionary = fetch_all_music_data_as_dictionary()
+    guess_chord()
 
 
 if __name__ == "__main__":
