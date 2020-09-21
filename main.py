@@ -39,17 +39,17 @@ H = 1
 
 # Modes and their steps, final step will be shown if scale_length is set to 7 below.
 mode_dictionary = {
-    "Ionian        ":[W, W, H, W, W, W, H],
-    "Dorian        ":[W, H, W, W, W, H, W],
-    "Phrygian      ":[H, W, W, W, H, W, W],
-    "Lydian        ":[W, W, W, H, W, W, H],
-    "Mixolydian    ":[W, W, H, W, W, H, W],
-    "Aeolian       ":[W, H, W, W, H, W, W],
-    "Locrian       ":[H, W, W, H, W, W, W],
-    "Harmonic Major":[W, W, H, W, H, W + H, W],
-    "Harmonic Minor":[W, H, W, W, H, W + H, H],
-    "Melodic Major ":[W, W, H, W, H, W, W],
-    "Melodic Minor ":[W, H, W, W, W, W, H],
+    "Ionian        ": [W, W, H, W, W, W, H],
+    "Dorian        ": [W, H, W, W, W, H, W],
+    "Phrygian      ": [H, W, W, W, H, W, W],
+    "Lydian        ": [W, W, W, H, W, W, H],
+    "Mixolydian    ": [W, W, H, W, W, H, W],
+    "Aeolian       ": [W, H, W, W, H, W, W],
+    "Locrian       ": [H, W, W, H, W, W, W],
+    "Harmonic Major": [W, W, H, W, H, W + H, W],
+    "Harmonic Minor": [W, H, W, W, H, W + H, H],
+    "Melodic Major ": [W, W, H, W, H, W, W],
+    "Melodic Minor ": [W, H, W, W, W, W, H],
 }
 
 mode_list = list(mode_dictionary)
