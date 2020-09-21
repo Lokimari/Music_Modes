@@ -174,8 +174,6 @@ def determine_chord(inputs, musical_dict):
 
             likelihood = 0
 
-    possible_modes_list = list(possible_modes)
-
     # Printing every mode the inputs match with
     for root in possible_modes:
         print(root)
