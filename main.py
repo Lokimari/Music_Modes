@@ -157,6 +157,8 @@ def determine_chord(inputs, musical_dict):
     likelihood = 0
 
     for root in musical_dict:
+        possible_modes[root] = dict()
+
         for mode in range(len(mode_list)):
 
             for note in inputs:
@@ -166,11 +168,23 @@ def determine_chord(inputs, musical_dict):
                             likelihood += 1
 
             if likelihood == len(inputs):
-                possible_modes += str(musical_dict[root][mode_list[mode]]) + "\n"
+                cur_mode = mode_list[mode]
+
+                possible_modes[root][cur_mode] = musical_dict[root][cur_mode]
 
             likelihood = 0
 
-    print(possible_modes)
+    possible_modes_list = list(possible_modes)
+
+    # Printing every mode the inputs match with
+    for root in possible_modes:
+        print(root)
+
+        for mode in range(len(possible_modes[root])):
+            try:
+                print(str(mode_list[mode]) + str(possible_modes[root][mode_list[mode]]))
+            except KeyError:
+                pass
 
 
 def guess_chord():
