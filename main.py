@@ -152,8 +152,8 @@ def fetch_single_scale(scale_letter, mode):
 
 
 def determine_chord(inputs, musical_dict):
-    #  Jaccard-like scoring system
-    possible_modes = ""
+    # Jaccard-like scoring system
+    possible_modes = dict()
     likelihood = 0
 
     for root in musical_dict:
