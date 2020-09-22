@@ -78,7 +78,7 @@ def print_all_modes_for_each_semitone():
         for mode in range(len(mode_dictionary)):
             steps = []
 
-            # Creating the scale based on mode
+            # Creating the scale basesd on mode
             for note in range(scale_length):
                 step_value = mode_dictionary[mode_list[mode]][note]
                 root_value = number_from_scale_input(root_scale)
@@ -94,7 +94,6 @@ def print_all_modes_for_each_semitone():
             scale = [root_scale]  # Reinitialize
 
         print("\n")
-
 
 def fetch_all_music_data_as_dictionary():
     musical_dictionary = dict()
@@ -150,11 +149,14 @@ def fetch_single_scale(scale_letter, mode):
 
     return scale
 
+def determine_chord(relevant_scale_mode_data):
+    pass
 
-def determine_chord(inputs, musical_dict):
+def gather_relevant_scale_mode_data(inputs, musical_dict):
     # Jaccard-like scoring system
     possible_modes = dict()
     likelihood = 0
+    i = 0
 
     for root in musical_dict:
         possible_modes[root] = dict()
@@ -174,28 +176,48 @@ def determine_chord(inputs, musical_dict):
 
             likelihood = 0
 
-    # Printing every mode the inputs match with
-    for root in possible_modes:
-        print(root)
+    return inputs, possible_modes
 
-        for mode in range(len(possible_modes[root])):
-            try:
-                print(str(mode_list[mode]) + str(possible_modes[root][mode_list[mode]]))
-            except KeyError:
-                pass
+
+    # # Printing every mode the inputs match with
+    # for root in possible_modes:
+    #     print(root)
+    #
+    #     for mode in range(len(possible_modes[root])):
+    #         try:
+    #             print(str(mode_list[mode]) + str(possible_modes[root][mode_list[mode]]))
+    #         except KeyError:
+    #             pass
 
 
 def guess_chord():
     found = 0
     musical_dictionary = fetch_all_music_data_as_dictionary()
-    inputs = set()
+    inputs = []
 
     while found == 0:
         note_input = input(">>> ")
-        inputs.add(note_input.upper() if note_input.upper() in musical_alphabet else print("Invalid input"))
+        inputs.append(note_input.upper() if note_input.upper() in musical_alphabet else print("Invalid input"))
 
-        if len(inputs) > 1:
-            determine_chord(inputs, musical_dictionary)
+        if len(inputs) > 2:
+            return gather_relevant_scale_mode_data(inputs, musical_dictionary)
+
+def pick_chords_from_inputs_modes(inputs, possible_modes):
+
+    input_indices = []
+
+    for semitone in possible_modes:
+        for mode in possible_modes[semitone]:
+            for mode_scale in possible_modes[semitone][mode]:
+                for mode_note in mode_scale:
+                    for note in inputs:
+                        if note == mode_note:
+                            input_indices.append(mode_scale.index(mode_note))
+
+            print(input_indices)
+
+            input_indices = []
+
 
 
 def main():
@@ -203,7 +225,13 @@ def main():
     # print_all_modes_for_each_semitone()
     # print(fetch_single_scale("C", 0))
     # musical_dictionary = fetch_all_music_data_as_dictionary()
-    guess_chord()
+    inputs, possible_modes = guess_chord()
+    print(f"inputs: {inputs}")
+    print(possible_modes)
+    pick_chords_from_inputs_modes(inputs, possible_modes)
+
+
+    # TODO - Assemble mode data and determine chord type(s)!
 
 
 if __name__ == "__main__":
