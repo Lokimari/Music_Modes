@@ -217,12 +217,13 @@ def pick_chords_from_inputs_modes(inputs, possible_modes):
                             input_indices.append(mode_scale.index(mode_note))
 
             print(input_indices)
-            i = 0
+
             for mode_type in chord_types_dictionary:
                 plus_ones = [n + 1 for n in input_indices]
+                print(f"ctd:mt: {chord_types_dictionary[mode_type]} - plus_ones: {plus_ones}")
                 if plus_ones == chord_types_dictionary[mode_type]:
-                    print(f"{inputs} found in {semitone} {mode} as a(n) {chord_types_list[i]} chord.")
-                i += 1
+                    chord_index = chord_types_dictionary.index
+                    print(f"{inputs} found in {semitone} {mode} as a(n) {chord_types_list[@@@@@@@@]} chord.")
 
             input_indices = []
 
