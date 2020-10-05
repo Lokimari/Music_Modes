@@ -205,6 +205,7 @@ def guess_chord():
 def pick_chords_from_inputs_modes(inputs, possible_modes):
 
     input_indices = []
+    input_dict = {}
 
     chord_types_list = list(chord_types_dictionary)
 
@@ -215,15 +216,48 @@ def pick_chords_from_inputs_modes(inputs, possible_modes):
                     for note in inputs:
                         if note == mode_note:
                             input_indices.append(mode_scale.index(mode_note))
+                            input_dict[note] = mode_scale.index(mode_note)
 
-            print(input_indices)
+            input_dict_list = list(input_dict)
 
             for mode_type in chord_types_dictionary:
+
                 plus_ones = [n + 1 for n in input_indices]
-                print(f"ctd:mt: {chord_types_dictionary[mode_type]} - plus_ones: {plus_ones}")
+                # print(f"input_dict: {input_dict}")
+
+                # Inversion detection logic
+
                 if plus_ones == chord_types_dictionary[mode_type]:
-                    chord_index = chord_types_dictionary.index
-                    print(f"{inputs} found in {semitone} {mode} as a(n) {chord_types_list[@@@@@@@@]} chord.")
+                    chord_index = chord_types_list.index(mode_type)
+
+                    if input_dict[inputs[-1]] < input_dict[inputs[0]]:
+                        print("1st inversion")  # CEG -> EGC
+                        inversion = [note for note in input_dict]
+                        final_note = inversion[0]
+                        for note in range(len(inversion)):
+                            inversion[note] = inversion[note - len(inversion) + 1]
+                        inversion[-1] = final_note
+
+                        print(f"{inversion} is the first inversion of {inputs}")
+                        print(f"{inversion} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
+
+                    elif input_dict[inputs[1]] < input_dict[inputs[-1]]:
+                        print("2nd inversion")  # CEG -> GCE
+                        inversion = [note for note in input_dict]
+
+                        first_note = inversion[-1]
+                        second_note = inversion[0]
+                        final_note = inversion[1]
+
+                        inversion[0] = first_note
+                        inversion[1] = second_note
+                        inversion[-1] = final_note
+
+                        print(f"{inversion} is the second inversion of {inputs}")
+                        print(f"{inversion} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
+
+                    else:
+                        print(f"{inputs} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
 
             input_indices = []
 
