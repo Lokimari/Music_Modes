@@ -1,5 +1,7 @@
 # Music Theory Figuring
 
+import copy
+
 def number_from_scale_input(scale_input):
     if scale_input.lower() == "g#" or scale_input.lower() == "ab":
         return 11
@@ -33,6 +35,7 @@ def number_from_scale_input(scale_input):
 musical_alphabet = ["A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G", "G#",
                     "A",  "A#", "B",  "C", "C#", "D",  "D#", "E",  "F", "F#", "G", "G#"]
 #           indices: 0     1     2     3    4     5     6     7     8    9     10   11
+flats = ["Ab", "Bb", "Cb", "Db", "Eb", "Fb", "Gb"]
 
 W = 2
 H = 1
@@ -57,8 +60,8 @@ mode_list = list(mode_dictionary)
 chord_types_dictionary = {
     "Major": [1, 3, 5],
     "Minor": [1, 2, 5],
-    "Diminished": [1, 2, 4],
-    "Augmented": [1, 3, 6],
+    # "Diminished": [1, 2, 4],
+    # "Augmented": [1, 3, 6],
     # Add more later, these are enough for testing...
 }
 
@@ -156,7 +159,6 @@ def gather_relevant_scale_mode_data(inputs, musical_dict):
     # Jaccard-like scoring system
     possible_modes = dict()
     likelihood = 0
-    i = 0
 
     for root in musical_dict:
         possible_modes[root] = dict()
@@ -164,8 +166,8 @@ def gather_relevant_scale_mode_data(inputs, musical_dict):
         for mode in range(len(mode_list)):
 
             for note in inputs:
-                for i in musical_dict[root][mode_list[mode]]:
-                    for mode_note in i:
+                for mode_notes in musical_dict[root][mode_list[mode]]:
+                    for mode_note in mode_notes:
                         if note == mode_note:
                             likelihood += 1
 
@@ -177,7 +179,6 @@ def gather_relevant_scale_mode_data(inputs, musical_dict):
             likelihood = 0
 
     return inputs, possible_modes
-
 
     # # Printing every mode the inputs match with
     # for root in possible_modes:
@@ -197,7 +198,9 @@ def guess_chord():
 
     while found == 0:
         note_input = input(">>> ")
-        inputs.append(note_input.upper() if note_input.upper() in musical_alphabet else print("Invalid input"))
+        uNote = note_input.upper()
+
+        inputs.append(uNote if uNote in musical_alphabet or note_input in flats else print("Invalid input"))
 
         if len(inputs) > 2:
             return gather_relevant_scale_mode_data(inputs, musical_dictionary)
@@ -229,38 +232,36 @@ def pick_chords_from_inputs_modes(inputs, possible_modes):
 
                 if plus_ones == chord_types_dictionary[mode_type]:
                     chord_index = chord_types_list.index(mode_type)
+                    inversion = [note for note in input_dict]
+                    inv_copy = copy.copy(inversion)
 
                     if input_dict[inputs[-1]] < input_dict[inputs[0]]:
                         print("1st inversion")  # CEG -> EGC
-                        inversion = [note for note in input_dict]
-                        final_note = inversion[0]
+
                         for note in range(len(inversion)):
-                            inversion[note] = inversion[note - len(inversion) + 1]
-                        inversion[-1] = final_note
+                            inversion[note] = inv_copy[note - len(inversion) + 1]
 
-                        print(f"{inversion} is the first inversion of {inputs}")
-                        print(f"{inversion} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
+                        print_inversion_data(inversion, inputs, semitone, mode, chord_types_list[chord_index])
 
-                    elif input_dict[inputs[1]] < input_dict[inputs[-1]]:
+                    elif input_dict[inputs[1]] < input_dict[inputs[0]]:
                         print("2nd inversion")  # CEG -> GCE
-                        inversion = [note for note in input_dict]
 
-                        first_note = inversion[-1]
-                        second_note = inversion[0]
-                        final_note = inversion[1]
+                        for note in range(len(inversion)):
+                            inversion[note] = inv_copy[note - 1]
 
-                        inversion[0] = first_note
-                        inversion[1] = second_note
-                        inversion[-1] = final_note
-
-                        print(f"{inversion} is the second inversion of {inputs}")
-                        print(f"{inversion} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
+                        print_inversion_data(inversion, inputs, semitone, mode, chord_types_list[chord_index])
 
                     else:
                         print(f"{inputs} found in {semitone} {mode} as a(n) {chord_types_list[chord_index]} chord.")
 
             input_indices = []
 
+def print_inversion_data(inversion, inputs, semitone, mode, chord_type):
+    print(f"{inversion} is the first inversion of {inputs}")
+    print(f"{inversion} found in {semitone} {mode} as a(n) {chord_type} chord.")
+
+def find_possible_scales_from_scale_input():
+    scale = []
 
 
 def main():
@@ -268,13 +269,13 @@ def main():
     # print_all_modes_for_each_semitone()
     # print(fetch_single_scale("C", 0))
     # musical_dictionary = fetch_all_music_data_as_dictionary()
+
     inputs, possible_modes = guess_chord()
     print(f"inputs: {inputs}")
     print(possible_modes)
     pick_chords_from_inputs_modes(inputs, possible_modes)
 
-
-    # TODO - Assemble mode data and determine chord type(s)!
+    find_possible_scales_from_scale_input()
 
 
 if __name__ == "__main__":
