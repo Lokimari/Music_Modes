@@ -265,10 +265,9 @@ def print_inversion_data(inversion, inputs, semitone, mode, chord_type):
 def find_possible_scales_from_scale_input(inputs, possible_modes):
     print(f"Inputs: {inputs}")
     print("Possible Modes")
-    possible_modes_list = list(possible_modes)
 
     for semitone in possible_modes:
-        print(semitone)
+        print(semitone) if len(possible_modes[semitone]) > 0 else None
         for mode in possible_modes[semitone]:
             for mode_scale in possible_modes[semitone][mode]:
                 print(f"{mode}: {mode_scale}")
