@@ -147,7 +147,7 @@ def fetch_all_music_data_as_dictionary():
 
 
 # For just getting a single scale
-def construct_single_scale(scale_index, mode):
+def construct_single_scale(scale_index: int, mode: int) -> list:
     steps = []
     scale = [musical_alphabet[scale_index]]
 
