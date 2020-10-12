@@ -196,14 +196,16 @@ def guess_chord():
     musical_dictionary = fetch_all_music_data_as_dictionary()
     inputs = []
 
+    print("Input notes, type \"z\" when finished.")
+
     while found == 0:
         note_input = input(">>> ")
         uNote = note_input.upper()
 
-        inputs.append(uNote if uNote in musical_alphabet or note_input in flats else print("Invalid input"))
+        inputs.append(uNote if uNote in musical_alphabet or note_input.lower() == "z" or note_input in flats else print("Invalid input"))
 
-        if len(inputs) > 2:
-            return gather_relevant_scale_mode_data(inputs, musical_dictionary)
+        if inputs[-1].lower() == "z":
+            return gather_relevant_scale_mode_data(inputs[:-1], musical_dictionary)
 
 def pick_chords_from_inputs_modes(inputs, possible_modes):
 
@@ -260,22 +262,29 @@ def print_inversion_data(inversion, inputs, semitone, mode, chord_type):
     print(f"{inversion} is the first inversion of {inputs}")
     print(f"{inversion} found in {semitone} {mode} as a(n) {chord_type} chord.")
 
-def find_possible_scales_from_scale_input():
-    scale = []
+def find_possible_scales_from_scale_input(inputs, possible_modes):
+    print(f"Inputs: {inputs}")
+    print("Possible Modes")
+    possible_modes_list = list(possible_modes)
 
+    for semitone in possible_modes:
+        print(semitone)
+        for mode in possible_modes[semitone]:
+            for mode_scale in possible_modes[semitone][mode]:
+                print(f"{mode}: {mode_scale}")
 
 def main():
-    print("Chord Guesser")
+    # print("Chord Guesser")
     # print_all_modes_for_each_semitone()
     # print(fetch_single_scale("C", 0))
-    # musical_dictionary = fetch_all_music_data_as_dictionary()
+    musical_dictionary = fetch_all_music_data_as_dictionary()
 
     inputs, possible_modes = guess_chord()
-    print(f"inputs: {inputs}")
-    print(possible_modes)
-    pick_chords_from_inputs_modes(inputs, possible_modes)
+    # print(f"inputs: {inputs}")
+    # print(possible_modes)
+    # pick_chords_from_inputs_modes(inputs, possible_modes)
 
-    find_possible_scales_from_scale_input()
+    find_possible_scales_from_scale_input(inputs, possible_modes)
 
 
 if __name__ == "__main__":
