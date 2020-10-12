@@ -55,6 +55,20 @@ mode_dictionary = {
     "Melodic Minor ": [W, H, W, W, W, W, H],
 }
 
+mode_list_no_spaces = [
+    "Ionian",
+    "Dorian",
+    "Phrygian",
+    "Lydian",
+    "Mixolydian",
+    "Aeolian",
+    "Locrian",
+    "Harmonic Major",
+    "Harmonic Minor",
+    "Melodic Major",
+    "Melodic Minor"
+]
+
 mode_list = list(mode_dictionary)
 
 chord_types_dictionary = {
