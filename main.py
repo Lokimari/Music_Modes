@@ -230,6 +230,8 @@ def guess_chord():
             return gather_relevant_scale_mode_data(inputs[:-1], musical_dictionary)
 
 def pick_chords_from_inputs_modes(inputs, possible_modes):
+    print("Possible Chords")
+    print(f"Inputs: {inputs}")
 
     input_indices = []
     input_dict = {}
@@ -289,23 +291,62 @@ def find_possible_scales_from_scale_input(inputs, possible_modes):
     print("Possible Modes")
 
     for semitone in possible_modes:
-        print(semitone) if len(possible_modes[semitone]) > 0 else None
+        print(semitone) if len(possible_modes[semitone]) > 0 else None  # Incompatible semitones are not printed
         for mode in possible_modes[semitone]:
             for mode_scale in possible_modes[semitone][mode]:
                 print(f"{mode}: {mode_scale}")
 
+
+def user_menu():
+    print("\n##################################################")
+    print("####  Menu:                                   ####")
+    print("####        1: Print all modes                ####")
+    print("####        2: Fetch a single scale/mode      ####")
+    print("####        3: Fetch scale(s) via input       ####")
+    print("####        4: Fetch chord presence via input ####")
+    print("####                                          ####")
+    print("##################################################")
+
+
 def main():
-    # print("Chord Guesser")
-    # print_all_modes_for_each_semitone()
-    # print(fetch_single_scale("C", 0))
-    musical_dictionary = fetch_all_music_data_as_dictionary()
 
-    inputs, possible_modes = guess_chord()
-    # print(f"inputs: {inputs}")
-    # print(possible_modes)
-    # pick_chords_from_inputs_modes(inputs, possible_modes)
+    while True:
+        user_menu()
 
-    find_possible_scales_from_scale_input(inputs, possible_modes)
+        menu_choice = input("\n>>> ")
+
+        if int(menu_choice) == 1:
+            print_all_modes_for_each_semitone()
+
+        elif int(menu_choice) == 2:
+            data = input("Enter a semitone and which mode you would like printed. eg. C Ionian\n>>> ")
+
+            # Separate note from mode type
+            semitone = data[0] if data[1].lower() != "b" or data[1].lower() != "#" else data[:2]
+            mode = data[2:] if len(semitone) == 1 else data[3:]
+
+            # Output
+            print(f"note: {semitone}")
+            print(f"mode: {mode}")
+
+            mode_int = mode_str_to_int_converter(mode)
+            print(fetch_single_scale(semitone, mode_int))
+
+        elif int(menu_choice) == 3 or int(menu_choice) == 4:
+            inputs, possible_modes = guess_chord()
+
+            if int(menu_choice) == 3:
+                find_possible_scales_from_scale_input(inputs, possible_modes)
+
+            elif int(menu_choice) == 4:
+                print("Section not fully implemented, it can only tell some Major Chords for now.")
+                pick_chords_from_inputs_modes(inputs, possible_modes)  # TODO: Needs refinement
+
+        else:
+            print("Invalid input")
+            pass
+
+    # musical_dictionary = fetch_all_music_data_as_dictionary()  # All musical scale/mode data
 
 
 if __name__ == "__main__":
