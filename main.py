@@ -160,7 +160,15 @@ def construct_single_scale(scale_index: int, mode: int) -> list:
     return scale
 
 
-def fetch_single_scale(scale_letter, mode):
+def mode_str_to_int_converter(mode_string: str) -> int:
+    i = 0
+    for mode in mode_list_no_spaces:
+        if mode_string == mode:
+            return i
+        i += 1
+
+
+def fetch_single_scale(scale_letter: str, mode: int) -> list:
     scale_index = number_from_scale_input(scale_letter)
     scale = construct_single_scale(scale_index, mode)
 
