@@ -10,6 +10,8 @@ mode_list_no_spaces = dt.mode_list_no_spaces
 chord_types_dictionary = dt.chord_types_dictionary
 
 # Functions
+
+
 def number_from_scale_input(scale_input) -> int:
     if scale_input.lower() == "g#" or scale_input.lower() == "ab":
         return 11
@@ -67,6 +69,7 @@ def print_all_modes_for_each_semitone() -> None:
             scale = [root_scale]  # Reinitialize
 
         print("\n")
+
 
 def fetch_all_music_data_as_dictionary() -> dict:
     musical_dictionary = dict()
@@ -172,12 +175,23 @@ def guess_chord() -> [list, list]:
     found = 0
     musical_dictionary = fetch_all_music_data_as_dictionary()
     inputs = []
+    uNote = str()
 
     print("Input notes, type \"z\" when finished.")
-
     while found == 0:
-        note_input = input(">>> ")
-        uNote = note_input.upper()
+        note_input = str(input(">>> "))
+
+        if len(note_input) == 1:
+            uNote = note_input.upper()
+
+        elif len(note_input) == 2:
+            uNote = note_input[0].upper()
+            if note_input[1] == "#":
+                uNote += "#"
+            elif str(note_input[1]).lower() == "b":
+                uNote += "b"
+
+        # uNote = note_input.upper() if len(note_input) == 1
         flat_uNote = (str(uNote[0]) + str(uNote[1].lower())) if len(uNote) == 2 and uNote[1] == "B" else None
 
         inputs.append(uNote if uNote in musical_alphabet or uNote == "Z" or flat_uNote in dt.flats else print("Invalid input"))
