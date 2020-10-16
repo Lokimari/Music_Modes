@@ -178,10 +178,11 @@ def guess_chord() -> [list, list]:
     while found == 0:
         note_input = input(">>> ")
         uNote = note_input.upper()
+        flat_uNote = (str(uNote[0]) + str(uNote[1].lower())) if len(uNote) == 2 and uNote[1] == "B" else None
 
-        inputs.append(uNote if uNote in musical_alphabet or note_input.lower() == "z" or note_input in flats else print("Invalid input"))
+        inputs.append(uNote if uNote in musical_alphabet or uNote == "Z" or flat_uNote in dt.flats else print("Invalid input"))
 
-        if inputs[-1].lower() == "z":
+        if inputs[-1] == "Z":
             return gather_relevant_scale_mode_data(inputs[:-1], musical_dictionary)
 
 

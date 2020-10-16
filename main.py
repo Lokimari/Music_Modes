@@ -46,7 +46,7 @@ def main():
 
             elif int(menu_choice) == 4:
                 print("Section not fully implemented, it can only tell some Major Chords for now.")
-                mt.pick_chords_from_inputs_modes(inputs, possible_modes)  # TODO: Needs refinement
+                mt.pick_chords_from_inputs_modes(inputs, possible_modes)  # TODO: Needs refinement/rework
 
         elif int(menu_choice) == 5:
             print("Exiting")
