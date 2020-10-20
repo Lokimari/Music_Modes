@@ -13,52 +13,43 @@ chord_types_dictionary = dt.chord_types_dictionary
 
 
 def number_from_scale_input(scale_input) -> int:
-    if scale_input.lower() == "g#" or scale_input.lower() == "ab":
-        return 11
-    elif scale_input.lower() == "g":
-        return 10
-    elif scale_input.lower() == "f#" or scale_input.lower() == "gb":
-        return 9
-    elif scale_input.lower() == "f":
-        return 8
-    elif scale_input.lower() == "e" or scale_input.lower() == "fb":
-        return 7
-    elif scale_input.lower() == "d#" or scale_input.lower() == "eb":
-        return 6
-    elif scale_input.lower() == "d":
-        return 5
-    elif scale_input.lower() == "c#" or scale_input.lower() == "db":
-        return 4
-    elif scale_input.lower() == "c" or scale_input.lower() == "b#":
-        return 3
-    elif scale_input.lower() == "b" or scale_input.lower() == "cb":
-        return 2
-    elif scale_input.lower() == "a#" or scale_input.lower() == "bb":
-        return 1
-    elif scale_input.lower() == "a":
-        return 0
-    else:
-        return 0
+    inp_lower = scale_input.lower()
+    semitone_num_dict = {
+        "g#": 11,
+        "ab": 11,
+        "g": 10,
+        "f#": 9,
+        "gb": 9,
+        "f": 8,
+        "e" : 7,
+        "fb": 7,
+        "d#": 6,
+        "eb": 6,
+        "d": 5,
+        "c#": 4,
+        "db": 4,
+        "c": 3,
+        "b#": 3,
+        "b": 2,
+        "cb": 2,
+        "a#": 1,
+        "bb": 1,
+        "a": 0,
+    }
+    return semitone_num_dict[inp_lower]
 
 
-def conv_flat_to_sharp(input) -> str:
-    if input == "Ab":
-        return "G#"
-    elif input == "Bb":
-        return "A#"
-    elif input == "Cb":
-        return "B"
-    elif input == "Db":
-        return "C#"
-    elif input == "Eb":
-        return "D#"
-    elif input == "Fb":
-        return "E"
-    elif input == "Gb":
-        return "F#"
-    else:
-        print("Invalid input for conv_flat_to_sharp function in functions file")
-        return input
+def conv_flat_to_sharp(flat_inp) -> str:
+    sharp_dict = {
+        "Ab": "G#",
+        "Bb": "A#",
+        "Cb": "B" ,
+        "Db": "C#",
+        "Eb": "D#",
+        "Fb": "E" ,
+        "Gb": "F#",
+    }
+    return sharp_dict[flat_inp]
 
 
 def get_sharp_from_flat(inputs) -> list:
@@ -203,6 +194,7 @@ def gather_relevant_scale_mode_data(inputs: list, musical_dict: dict) -> [list, 
     #             print(str(mode_list[mode]) + str(possible_modes[root][mode_list[mode]]))
     #         except KeyError:
     #             pass
+
 
 def guess_chord() -> [list, list]:
     found = 0
