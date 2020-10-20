@@ -40,6 +40,37 @@ def number_from_scale_input(scale_input) -> int:
     else:
         return 0
 
+
+def conv_flat_to_sharp(input) -> str:
+    if input == "Ab":
+        return "G#"
+    elif input == "Bb":
+        return "A#"
+    elif input == "Cb":
+        return "B"
+    elif input == "Db":
+        return "C#"
+    elif input == "Eb":
+        return "D#"
+    elif input == "Fb":
+        return "E"
+    elif input == "Gb":
+        return "F#"
+    else:
+        print("Invalid input for conv_flat_to_sharp function in functions file")
+        return input
+
+
+def get_sharp_from_flat(inputs) -> list:
+    for inp in range(len(inputs)):
+        if len(inputs[inp]) > 1:
+            if inputs[inp][1] == "b":
+                converted_inp = conv_flat_to_sharp(inputs[inp])
+                inputs[inp] = converted_inp
+
+    return inputs
+
+
 def print_all_modes_for_each_semitone() -> None:
     # Logic
     for new_scale in range(12):
@@ -133,8 +164,10 @@ def fetch_single_scale(scale_letter: str, mode: int) -> list:
 
     return scale
 
+
 def determine_chord(relevant_scale_mode_data):
     pass
+
 
 def gather_relevant_scale_mode_data(inputs: list, musical_dict: dict) -> [list, list]:
     # Jaccard-like scoring system
@@ -186,15 +219,18 @@ def guess_chord() -> [list, list]:
 
         elif len(note_input) == 2:
             uNote = note_input[0].upper()
+
             if note_input[1] == "#":
                 uNote += "#"
-            elif str(note_input[1]).lower() == "b":
+            elif note_input[1].lower() == "b":
                 uNote += "b"
 
         # uNote = note_input.upper() if len(note_input) == 1
-        flat_uNote = (str(uNote[0]) + str(uNote[1].lower())) if len(uNote) == 2 and uNote[1] == "B" else None
+        # flat_uNote = (str(uNote[0]) + str(uNote[1].lower())) if len(uNote) == 2 and uNote[1] == "B" else None
 
-        inputs.append(uNote if uNote in musical_alphabet or uNote == "Z" or flat_uNote in dt.flats else print("Invalid input"))
+        inputs.append(uNote if uNote in musical_alphabet or uNote == "Z" or uNote in dt.flats else print("Invalid input"))
+
+        inputs = get_sharp_from_flat(inputs)
 
         if inputs[-1] == "Z":
             return gather_relevant_scale_mode_data(inputs[:-1], musical_dictionary)
