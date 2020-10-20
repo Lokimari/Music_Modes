@@ -2,7 +2,8 @@
 
 import functions as mt
 
-def user_menu():
+
+def user_menu() -> None:
     print("\n##################################################")
     print("####  Menu:                                   ####")
     print("####        1: Print all modes                ####")
@@ -14,7 +15,7 @@ def user_menu():
     print("##################################################")
 
 
-def main():
+def main() -> None:
 
     while True:
         user_menu()
