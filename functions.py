@@ -232,29 +232,36 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
     print("Possible Chords")
     print(f"Inputs: {inputs}")
 
-    input_indices = []
+    input_indices = []  # Gets values to be used for chord_dict for chord detection weee
     input_dict = {}
 
     chord_types_list = list(chord_types_dictionary)
 
+    # For each semitone
     for semitone in possible_modes:
+        # For each mode(name) of that semitone
         for mode in possible_modes[semitone]:
+            # For each set of notes in the mode
             for mode_scale in possible_modes[semitone][mode]:
+                # For each individual note in the set
                 for mode_note in mode_scale:
+                    # Compare to inputs
                     for note in inputs:
+                        # If equal, append int index of mode note and add mode to input_dict
                         if note == mode_note:
                             input_indices.append(mode_scale.index(mode_note))
                             input_dict[note] = mode_scale.index(mode_note)
 
             input_dict_list = list(input_dict)
 
+            # For each set of values in the chord dict
             for mode_type in chord_types_dictionary:
 
                 plus_ones = [n + 1 for n in input_indices]
                 # print(f"input_dict: {input_dict}")
 
                 # Inversion detection logic
-
+                # Needs a simple, solid way to actually detect chords dynamically with inversions
                 if plus_ones == chord_types_dictionary[mode_type]:
                     chord_index = chord_types_list.index(mode_type)
                     inversion = [note for note in input_dict]
