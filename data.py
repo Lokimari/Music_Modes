@@ -42,8 +42,8 @@ mode_list = list(mode_dictionary)
 chord_types_dictionary = {
     "Major": [1, 3, 5],
     "Minor": [1, 2, 5],
-    # "Diminished": [1, 2, 4],
-    # "Augmented": [1, 3, 6],
+    "Diminished": [1, 2, 4],
+    "Augmented": [1, 3, 6],
     # Add more later, these are enough for testing...
 }
 

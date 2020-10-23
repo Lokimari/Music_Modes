@@ -253,15 +253,18 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
                             input_dict[note] = mode_scale.index(mode_note)
 
             input_dict_list = list(input_dict)
+            plus_ones = [n + 1 for n in input_indices]
 
             # For each set of values in the chord dict
             for mode_type in chord_types_dictionary:
 
-                plus_ones = [n + 1 for n in input_indices]
                 # print(f"input_dict: {input_dict}")
 
                 # Inversion detection logic
                 # Needs a simple, solid way to actually detect chords dynamically with inversions
+                # Perhaps just find the possible chord (root) and then find its place in the scale
+                # eg. EGC = CEG = C = 1st semitone in scale C, so it must be a Major Chord, I ii iii IV V vi vii*
+                # Could work
                 if plus_ones == chord_types_dictionary[mode_type]:
                     chord_index = chord_types_list.index(mode_type)
                     inversion = [note for note in input_dict]
