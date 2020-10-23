@@ -253,10 +253,12 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
                             input_dict[note] = mode_scale.index(mode_note)
 
             input_dict_list = list(input_dict)
+
             plus_ones = [n + 1 for n in input_indices]
 
             # For each set of values in the chord dict
             for mode_type in chord_types_dictionary:
+
 
                 # print(f"input_dict: {input_dict}")
 
@@ -265,21 +267,33 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
                 # Perhaps just find the possible chord (root) and then find its place in the scale
                 # eg. EGC = CEG = C = 1st semitone in scale C, so it must be a Major Chord, I ii iii IV V vi vii*
                 # Could work, but the inversions seem to be improperly displaying in general as of 10/22/2020 7:30pm :P
+
+                # Might want to calculate inversions based on differences in the values of inputs_dict or something similar
                 if plus_ones == chord_types_dictionary[mode_type]:
+                    print(f"input_dict: {input_dict}")
+                    potential_root = str()
+                    for value in range(len(input_dict)):
+                        if input_dict[input_dict_list[value]] == 0:
+                            potential_root = input_dict_list[value]
+
+                    print(f"Potential root note of this chord = {potential_root}")
+
                     chord_index = chord_types_list.index(mode_type)
                     inversion = [note for note in input_dict]
                     inv_copy = copy.copy(inversion)
 
-                    if input_dict[inputs[-1]] < input_dict[inputs[0]]:
+                    if (input_dict[inputs[0]] > input_dict[inputs[2]]) and (input_dict[inputs[2]] > input_dict[inputs[1]]):
                         print("1st inversion")  # CEG -> EGC
+                                                # 024 -> 240
 
                         for note in range(len(inversion)):
                             inversion[note] = inv_copy[note - len(inversion) + 1]
 
                         print_inversion_data(inversion, inputs, semitone, mode, chord_types_list[chord_index])
 
-                    elif input_dict[inputs[1]] < input_dict[inputs[0]]:
+                    elif (input_dict[inputs[1]] > input_dict[inputs[0]]) and (input_dict[inputs[0]] > input_dict[inputs[2]]):
                         print("2nd inversion")  # CEG -> GCE
+                                                # 024 -> 402
 
                         for note in range(len(inversion)):
                             inversion[note] = inv_copy[note - 1]
