@@ -322,3 +322,21 @@ def find_possible_scales_from_scale_input(inputs, possible_modes) -> None:
                 print(f"{mode}: {mode_scale}")
 
 
+# Can just use this interval system to determine chord types dynamically
+# :D
+# C to E prints a 4, which is going to be used as a third
+# Distance is gotten by total whole notes, so: C D E = 3
+# Intervals are always ascending
+# A flat is then a minor x-rd
+# the 4 being printed in this test case is indicative of the quality of the interval
+# the quality is a major third, since 4 semitones are passed over
+
+from data import musical_alphabet
+test_alpha = musical_alphabet
+
+def get_distance_between_notes(notes: list):
+    ma_index = musical_alphabet.index
+    first_interval = ma_index(notes[1]) - ma_index(notes[0])
+    print(first_interval)
+
+get_distance_between_notes(["C", "E"])
