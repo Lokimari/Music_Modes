@@ -338,6 +338,8 @@ def get_intervals_between_notes(notes: list) -> list:
 
     for note in range(len(notes) - 1):
         interval = ma_index(notes[note + 1]) - ma_index(notes[note])
+        if interval == -9:
+            interval = 3
         interval_list.append(interval)
 
     return interval_list
@@ -359,9 +361,20 @@ def interpret_intervals(interval_list):
             elif interval_list[1] == 3 and interval_list[2] == 4:
                 print("This is a minor triad")
 
+            elif interval_list[1] == 4 and interval_list[2] == 4:
+                print("This is an augmented triad")
+
+            elif interval_list[1] == 3 and interval_list[2] == 3:
+                print("This is a diminished triad ")
+
+        elif len(interval_list) > 3:
+            # Larger than triads, but should account for any octaves
+            pass
 
 
 
-notes = ["B", "D#", "F#"]
+notes = ["C", "D#", "F#"]
+# notes = ["D#", "G", "A#"]
+# notes = ["D#", "G", "A#"]
 print(interpret_intervals(get_intervals_between_notes(notes)))
 print(get_intervals_between_notes(notes))
