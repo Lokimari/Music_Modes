@@ -270,8 +270,11 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
 
                 # Might want to calculate inversions based on differences in the values of inputs_dict or something similar
                 if plus_ones == chord_types_dictionary[mode_type]:
-                    print(f"input_dict: {input_dict}")
+                    # print(f"input_dict: {input_dict}")
                     potential_root = str()
+
+                    print(interpret_intervals(get_intervals_between_notes(inputs)))
+
                     for value in range(len(input_dict)):
                         if input_dict[input_dict_list[value]] == 0:
                             potential_root = input_dict_list[value]
@@ -353,6 +356,9 @@ def interpret_intervals(interval_list):
             if interval_list[1] == 7:
                 print("This is a perfect fifth")
 
+            if interval_list[0] == interval_list[1]:
+                print("This is an octave")
+
         elif len(interval_list) == 3:
 
             if interval_list[1] == 4 and interval_list[2] == 3:
@@ -365,16 +371,18 @@ def interpret_intervals(interval_list):
                 print("This is an augmented triad")
 
             elif interval_list[1] == 3 and interval_list[2] == 3:
-                print("This is a diminished triad ")
+                print("This is a diminished triad")
+            # need more dynamic logic for octave recognition
+            # elif interval_list[0] == interval_list[1] or interval_list[0] == []:
+            #     print("This is an octave")
+
 
         elif len(interval_list) > 3:
             # Larger than triads, but should account for any octaves
             pass
 
 
-
-notes = ["C", "D#", "F#"]
-# notes = ["D#", "G", "A#"]
-# notes = ["D#", "G", "A#"]
+# notes = ["C", "D#", "F#"]
+notes = ["E", "E"]
 print(interpret_intervals(get_intervals_between_notes(notes)))
-print(get_intervals_between_notes(notes))
+# print(get_intervals_between_notes(notes))
