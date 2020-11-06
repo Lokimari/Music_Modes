@@ -279,6 +279,11 @@ def pick_chords_from_inputs_modes(inputs, possible_modes) -> None:
                         if input_dict[input_dict_list[value]] == 0:
                             potential_root = input_dict_list[value]
 
+                    # Need to refactor this entire fucking thing into something universally legible
+                    # Vielleicht nur dieses alle dabei kompressieren und auchmal mit dem neues Logic
+                    # s'wiederschreiben - wurdt dabei auchmal besser sein irgenwer
+                    # als jetzt ist, ist es doch zu komplikatiert um lesen, editieren, und benutzen
+                    # ist auchmal vielleicht falsch
                     print(f"Potential root note of this chord = {potential_root}")
 
                     chord_index = chord_types_list.index(mode_type)
@@ -376,10 +381,30 @@ def interpret_intervals(interval_list):
             # elif interval_list[0] == interval_list[1] or interval_list[0] == []:
             #     print("This is an octave")
 
-
         elif len(interval_list) > 3:
             # Larger than triads, but should account for any octaves
             pass
+
+
+# # Complete the migratoryBirds function below.
+# def migratoryBirds(arr):
+#     bird_dict = {}
+#     for bird in arr:
+#         if str(bird) in bird_dict:
+#             bird_dict[str(bird)] += 1
+#         else:
+#             bird_dict[str(bird)] = 1
+#
+#     values = []
+#     for value in bird_dict:
+#         values.append(value)
+#
+#     # need to get max dictionary value as index and return that
+#     earliest_max_index = values.index(max(values))
+#     keys_list = [key for key in bird_dict]
+#     print(earliest_max_index)
+#     print(keys_list)
+#     return keys_list[earliest_max_index]
 
 
 # notes = ["C", "D#", "F#"]
