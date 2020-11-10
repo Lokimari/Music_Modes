@@ -386,27 +386,6 @@ def interpret_intervals(interval_list):
             pass
 
 
-# # Complete the migratoryBirds function below.
-# def migratoryBirds(arr):
-#     bird_dict = {}
-#     for bird in arr:
-#         if str(bird) in bird_dict:
-#             bird_dict[str(bird)] += 1
-#         else:
-#             bird_dict[str(bird)] = 1
-#
-#     values = []
-#     for value in bird_dict:
-#         values.append(value)
-#
-#     # need to get max dictionary value as index and return that
-#     earliest_max_index = values.index(max(values))
-#     keys_list = [key for key in bird_dict]
-#     print(earliest_max_index)
-#     print(keys_list)
-#     return keys_list[earliest_max_index]
-
-
 # notes = ["C", "D#", "F#"]
 notes = ["E", "E"]
 print(interpret_intervals(get_intervals_between_notes(notes)))
