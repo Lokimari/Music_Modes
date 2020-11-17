@@ -352,6 +352,12 @@ def get_intervals_between_notes(notes: list) -> list:
 
     return interval_list
 
+interval_dict = {
+    "[0, 4, 3]": "Major Triad",
+    "[0, 3, 4]": "Minor Triad",
+    "[0, 4, 4]": "Augmented Triad",
+    "[0, 3, 3]": "Diminished Triad",
+}
 
 def interpret_intervals(interval_list):
     if len(interval_list) > 1:
@@ -365,46 +371,11 @@ def interpret_intervals(interval_list):
                 print("This is an octave")
 
         elif len(interval_list) == 3:
-
-            if interval_list[1] == 4 and interval_list[2] == 3:
-                print("This is a major triad")
-
-            elif interval_list[1] == 3 and interval_list[2] == 4:
-                print("This is a minor triad")
-
-            elif interval_list[1] == 4 and interval_list[2] == 4:
-                print("This is an augmented triad")
-
-            elif interval_list[1] == 3 and interval_list[2] == 3:
-                print("This is a diminished triad")
-            # need more dynamic logic for octave recognition
-            # elif interval_list[0] == interval_list[1] or interval_list[0] == []:
-            #     print("This is an octave")
+            triad = str(interval_list)
+            print(f"Triad recognized as: {interval_dict[triad]}")
 
         elif len(interval_list) > 3:
-            # Larger than triads, but should account for any octaves
             pass
-
-
-# # Complete the migratoryBirds function below.
-# def migratoryBirds(arr):
-#     bird_dict = {}
-#     for bird in arr:
-#         if str(bird) in bird_dict:
-#             bird_dict[str(bird)] += 1
-#         else:
-#             bird_dict[str(bird)] = 1
-#
-#     values = []
-#     for value in bird_dict:
-#         values.append(value)
-#
-#     # need to get max dictionary value as index and return that
-#     earliest_max_index = values.index(max(values))
-#     keys_list = [key for key in bird_dict]
-#     print(earliest_max_index)
-#     print(keys_list)
-#     return keys_list[earliest_max_index]
 
 
 # notes = ["C", "D#", "F#"]
