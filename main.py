@@ -15,6 +15,21 @@ def user_menu() -> None:
     print("##################################################")
 
 
+def menu_choose_single_scale_mode():
+    data = input("Enter a semitone and which mode you would like printed. eg. C Ionian\n>>> ")
+
+    # Separate note from mode type
+    semitone = data[0] if data[1].lower() == " " else data[0:2]
+    mode = data[2:] if len(semitone) == 1 else data[3:]
+
+    # Output
+    print(f"note: {semitone}")
+    print(f"mode: {mode}")
+
+    mode_int = mt.mode_str_to_int_converter(mode)
+    print(mt.fetch_single_scale(semitone, mode_int))
+
+
 def main() -> None:
 
     while True:
@@ -26,18 +41,7 @@ def main() -> None:
             mt.print_all_modes_for_each_semitone()
 
         elif int(menu_choice) == 2:
-            data = input("Enter a semitone and which mode you would like printed. eg. C Ionian\n>>> ")
-
-            # Separate note from mode type
-            semitone = data[0] if data[1].lower() == " " else data[0:2]
-            mode = data[2:] if len(semitone) == 1 else data[3:]
-
-            # Output
-            print(f"note: {semitone}")
-            print(f"mode: {mode}")
-
-            mode_int = mt.mode_str_to_int_converter(mode)
-            print(mt.fetch_single_scale(semitone, mode_int))
+            menu_choose_single_scale_mode()
 
         elif int(menu_choice) == 3 or int(menu_choice) == 4:
             inputs, possible_modes = mt.guess_chord()
